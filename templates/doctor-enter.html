@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Вход
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+    <form style="max-width: 400px; margin: auto;" method="POST" action="{{ url_for('doctor_enter') }}">
+        <h1 class="h3 mb-3 fw-normal">Введите данные пациента</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div><br>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingName" name="name" placeholder="Иванов Иван">
+            <label for="floatingName">Введите имя</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" name="code" placeholder="12345678">
+            <label for="floatingInput">Введите уникальный код</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2">Войти</button>
+    </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base-posts.html' %}
+
+{% block logout %}
+
+<style>
+    /* Стили для центрирования выпадающего списка */
+    .dropdown-menu-center {
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(100% + 5px);
+        position: absolute;
+        display: none;
+    }
+</style>
+
+<a href="#" class="navbar-brand navbar-brand-gray d-flex align-items-center" id="dropdownToggle">
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+    </svg>
+</a>
+
+<div id="userDropdown" class="dropdown-menu dropdown-menu-center">
+    <a href="/logout" class="dropdown-item">Выйти из аккаунта</a>
+    <a href="#" class="dropdown-item" onclick="showUserId()">Получить мой уникальный код</a>
+    <a href="/delete_user/{{ current_user.id }}" class="dropdown-item" onclick="return confirmDelete();">Удалить аккаунт</a>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm("Вы уверены, что хотите удалить аккаунт?");
+    }
+
+    // Функция для отображения/скрытия списка кнопок
+    function toggleDropdown() {
+        var dropdownMenu = document.getElementById("userDropdown");
+        dropdownMenu.classList.toggle("show");
+    }
+
+    // Функция для отображения ID пользователя
+    function showUserId() {
+        alert("Ваш уникальный код: {{ current_user.id }}");
+    }
+
+    // Обработчик события клика для открытия/закрытия выпадающего списка
+    document.getElementById('dropdownToggle').addEventListener('click', function(event) {
+        event.preventDefault();
+        toggleDropdown();
+    });
+
+    // Обработчик события клика для закрытия списка при клике вне его области
+    document.addEventListener("click", function(event) {
+        var dropdownMenu = document.getElementById("userDropdown");
+        var icon = document.getElementById("dropdownToggle");
+        if (!icon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove("show");
+        }
+    });
+</script>
+
+{% endblock %}
+
+
+{% block add_button %}
+    <a href="/patient-create-record" class="btn btn-primary btn-lg">Добавить запись</a>
+    <a href="/patient-files" class="btn btn-primary btn-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-medical" viewBox="0 0 16 16">
+              <path d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+              <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+        </svg>
+    </a>
+    <br>
+{% endblock %}
+
+{% block add_post_detail %}
+    <br><br>
+    <script>
+    function confirmDeletePost() {
+        return confirm("Вы уверены, что хотите удалить запись?");
+    }
+    </script>
+
+    {% if records|length > 0 %}
+        {% for element in records %}
+            {% if element.user_id == current_user.id %}
+                <div class="alert alert-info">
+                    <h2>{{ element.title }}</h2>
+                    <p>{{ element.text | replace('\n','<br>') | safe }}</p>
+                    <p><b>Дата: {{ element.date.date() }}</b></p>
+
+                    <a href="/posts/{{ element.id }}/update" class="btn btn-outline-secondary">Редактировать</a>
+                    <a href="/posts/{{ element.id }}/delete" class="btn btn-outline-secondary" onclick="return confirmDeletePost();">Удалить</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    {% else %}
+        <p>У вас еще нет записей на сайте</p>
+    {% endif %}
+
+{% endblock %}

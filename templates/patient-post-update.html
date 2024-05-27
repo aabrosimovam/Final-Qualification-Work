@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Редактирование записи
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Редактирование записи</h1><br>
+          <form method="post">
+              <input type="text" name="title" id="title" class="form-control" value="{{ record.title }}"><br>
+              <textarea name="text" id="text" class="form-control" >{{ record.text }}</textarea><br>
+              <input type="submit"  class="btn btn-outline-secondary" value="Сохранить">
+              <a href="/patient-posts" class="btn btn-outline-secondary">Отменить</a>
+          </form>
+      </div>
+    </div>
+</div>
+{% endblock %}

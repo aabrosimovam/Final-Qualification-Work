@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Вход
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+    <form style="max-width: 400px; margin: auto;" method="POST" action="/patient-enter">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1 class="h3 mb-3 fw-normal">Введите данные пользователя</h1>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" name="login" placeholder="Login">
+            <label for="floatingInput">Введите логин</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+            <label for="floatingPassword">Введите пароль</label>
+        </div>
+
+        <div class="form-check text-start my-3">
+          <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" name="remember">
+          <label class="form-check-label" for="flexCheckDefault">
+            Запомнить меня
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2">Войти</button>
+    </form>
+    </div>
+</div>
+{% endblock %}

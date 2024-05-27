@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Успешная регистрация
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">{{ session['name'] }}, регистрация прошла успешно</h1>
+            <h2 class="display-5 fw-bold">Ваш уникальный код: {{ session['user_id'] }}</h2>
+            <p class="col-md-8 fs-4">Сообщите имя, под которым вы зарегистрировались, и этот код своему лечащему врачу для отслеживания результатов вашей терапии</p>
+            <a href="/patient-enter" class="btn btn-primary btn-lg">Продолжить</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Войти как пациент</h1>
+        <p class="col-md-8 fs-4">Вам будут доступны функции добавления записей, их редактирования и удаления</p>
+        <a href="/patient-enter" class="btn btn-primary btn-lg">Режим пациента</a>
+      </div>
+    </div>
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <h2>Войти как врач</h2>
+          <p>Вам будет доступен просмотр записей вашего пациента без регистрации</p>
+          <a href="/doctor-enter" class="btn btn-outline-secondary">Режим врача</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <h2>Регистрация</h2>
+          <p>Если вы являетесь новым пользователем, то для начала вам нужно зарегистрироваться на этом сайте </p>
+          <a href="/patient-registration" class="btn btn-outline-secondary">Регистрация</a>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
