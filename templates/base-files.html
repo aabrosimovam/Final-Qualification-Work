@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все файлы
+{% endblock %}
+
+{% block body %}
+<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+
+        {% block back %}{% endblock %}
+
+        <br><br>
+        <h1 class="display-5 fw-bold">Все загруженные файлы</h1>
+        <br>
+
+        {% block add_files %}{% endblock %}
+
+        <br>
+        {% if files %}
+            <ul>
+                {% for file in files %}
+                    <li>
+                        <a href="{{ url_for('download_file', file_id=file.id) }}">{{ file.title }}</a>
+                        <form method="POST" action="{{ url_for('delete_file', file_id=file.id) }}" style="display:inline;" onsubmit="return confirmDelete();">
+                            {% block delete_files %}{% endblock %}
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет загруженных файлов.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm("Вы действительно хотите удалить файл?");
+    }
+</script>
+{% endblock %}
