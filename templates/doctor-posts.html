@@ -22,7 +22,7 @@
         {% for element in records %}
             <div class="alert alert-info">
                     <h2>{{ element.title }}</h2>
-                    <p>{{ element.text }}</p>
+                    <p>{{ element.text | replace('\n','<br>') | safe }}</p>
                     <p><b>Дата: {{ element.date.date() }}</b></p>
             </div>
         {% endfor %}
