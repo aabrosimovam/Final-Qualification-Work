@@ -29,12 +29,10 @@ def generate_unique_code_records():
 
 
 def encrypt_data(data):
-    """Шифрование данных"""
     return cipher_suite.encrypt(data.encode())
 
 
 def decrypt_data(encrypted_data):
-    """Дешифрование данных"""
     return cipher_suite.decrypt(encrypted_data).decode()
 
 
@@ -48,24 +46,14 @@ class Users(db.Model, UserMixin):
         return '<Users %r>' % self.id
 
     def set_name(self, name):
-        """Устанавливает зашифрованное имя"""
         self.name = encrypt_data(name)
 
     def get_name(self):
-        """Возвращает дешифрованное имя"""
         return decrypt_data(self.name)
-
-    # Метод для проверки активности пользователя
-    def is_active(self):
-        return True
 
     # Метод для проверки аутентификации пользователя
     def is_authenticated(self):
         return True
-
-    # Метод для получения идентификатора пользователя
-    def get_id(self):
-        return str(self.id)
 
 
 class Records(db.Model):

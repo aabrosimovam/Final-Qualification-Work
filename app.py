@@ -204,7 +204,6 @@ def post_update(id):
         return render_template("patient-post-update.html", record=record)
 
 
-
 @app.route('/delete_user/<user_id>')
 @login_required
 def delete_user(user_id):
@@ -228,7 +227,7 @@ def delete_user(user_id):
             db.session.commit()
 
             logout_user()  # Выход из учетной записи после удаления
-            return redirect('/')  # Перенаправляем на страницу входа для пациента или другую страницу
+            return redirect('/')
         else:
             return "Пользователь не найден"
     else:
