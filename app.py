@@ -91,19 +91,15 @@ def logout():
 @app.route('/doctor-enter', methods=['GET', 'POST'])
 def doctor_enter():
     if request.method == 'POST':
-        # Получаем данные из формы
         code = request.form['code']
         name = request.form['name']
 
-        # Поиск пользователя по уникальному коду
         user = Users.query.get(code)
 
         if user and user.get_name() == name:
-            # Если пользователь найден и имя совпадает, сохраняем его id в сессии
             session['user_id'] = user.id
             return redirect('/doctor-posts')
         else:
-            # Если пользователь не найден или имя не совпадает, выводим сообщение об ошибке
             flash('Пользователь с указанным уникальным кодом и именем не найден.', 'error')
 
     return render_template("doctor-enter.html")
@@ -170,7 +166,6 @@ def add_header(response):
 def delete(id):
     record = Records.query.get_or_404(str(id))
 
-    # Проверяем, является ли текущий пользователь владельцем записи
     if record.user_id != current_user.id:
         abort(403)  # Запрет доступа (Forbidden)
 
@@ -186,9 +181,8 @@ def delete(id):
 def post_update(id):
     record = Records.query.get(str(id))
 
-    # Проверяем, является ли текущий пользователь владельцем записи
     if record.user_id != current_user.id:
-        abort(403)  # Запрет доступа (Forbidden)
+        abort(403)
 
     if request.method == "POST":
         record.title = request.form['title']
